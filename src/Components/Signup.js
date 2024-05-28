@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { UsersContext } from "../Context/UsersContext";
 
 const Signup = () => {
-  const { userData, setUserData, handleChange, handleSubmit } =
+  const { userData, setUserData, handleChange, handleSignupSubmit } =
     useContext(UsersContext);
   return (
     <>
@@ -11,7 +11,7 @@ const Signup = () => {
         <Row className="justify-content-md-center">
           <Col xs={12} md={6}>
             <h2 className="my-4">Signup</h2>
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSignupSubmit}>
               <Form.Group controlId="formFirstName">
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
