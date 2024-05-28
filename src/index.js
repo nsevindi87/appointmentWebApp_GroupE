@@ -7,7 +7,8 @@ import { createHashRouter, RouterProvider } from "react-router-dom";
 import WelcomePage from "./Components/WelcomePage";
 import AppointmentPage from "./Components/AppointmentPage";
 import Profile from "./Components/Profile";
-import LoginSignup from "./Components/LoginSignup";
+import Login from "./Components/Login";
+import Signup from "./Components/Signup";
 
 const router = createHashRouter([
   {
@@ -28,7 +29,11 @@ const router = createHashRouter([
       },
       {
         path: "login",
-        element: <LoginSignup />,
+        element: <Login />,
+      },
+      {
+        path: "signup",
+        element: <Signup />,
       },
     ],
   },

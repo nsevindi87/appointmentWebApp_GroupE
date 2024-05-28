@@ -1,15 +1,15 @@
 import "./App.css";
 import { Outlet } from "react-router-dom";
 import Navbar from "./Components/Navbar";
-import WelcomePage from "./Components/WelcomePage";
-import AppointmentPage from "./Components/AppointmentPage";
-import Profile from "./Components/Profile";
+import { UsersContextProvider } from "./Context/UsersContext";
 
 function App() {
   return (
     <>
-      <Navbar />
-      <Outlet />
+      <UsersContextProvider>
+        <Navbar />
+        <Outlet />
+      </UsersContextProvider>
     </>
   );
 }
