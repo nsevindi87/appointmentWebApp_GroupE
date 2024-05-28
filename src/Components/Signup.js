@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { UsersContext } from "../Context/UsersContext";
 
 const Signup = () => {
-  const { userData, setUserData, handleChange, handleSignupSubmit } =
+  const { userData, setUserData, handleSignupChange, handleSignupSubmit } =
     useContext(UsersContext);
   return (
     <>
@@ -18,7 +18,7 @@ const Signup = () => {
                   type="text"
                   name="firstName"
                   value={userData.firstName}
-                  onChange={handleChange}
+                  onChange={handleSignupChange}
                   placeholder="Enter first name"
                   required
                 />
@@ -30,7 +30,7 @@ const Signup = () => {
                   type="text"
                   name="lastName"
                   value={userData.lastName}
-                  onChange={handleChange}
+                  onChange={handleSignupChange}
                   placeholder="Enter last name"
                   required
                 />
@@ -42,7 +42,7 @@ const Signup = () => {
                   type="email"
                   name="email"
                   value={userData.email}
-                  onChange={handleChange}
+                  onChange={handleSignupChange}
                   placeholder="Enter email"
                   required
                 />
@@ -54,7 +54,7 @@ const Signup = () => {
                   type="password"
                   name="password"
                   value={userData.password}
-                  onChange={handleChange}
+                  onChange={handleSignupChange}
                   placeholder="Enter password"
                   required
                 />

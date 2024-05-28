@@ -16,9 +16,29 @@ export const UsersContextProvider = ({ children }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [allUsers, setAllUsers] = useState([]);
   const [user, setUser] = useState([]);
 
-  const handleChange = (e) => {
+  /* 
+    USER FUNCTIONS ==========================================
+*/
+
+  const getAllUsers = async () => {
+    try {
+      const response = await fetch("http://localhost:3302/users");
+      if (response.ok) {
+        const data = await response.json();
+        setAllUsers(data);
+      } else {
+        console.error("Failed to fetch appointments");
+      }
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
+  };
+
+  //Get Data From Sign Up Form to state
+  const handleSignupChange = (e) => {
     const { name, value } = e.target;
     setUserData({
       ...userData,
@@ -70,9 +90,10 @@ export const UsersContextProvider = ({ children }) => {
     } catch (error) {
       setUserData({
         email: "",
+        password: "",
       });
       alert("This email adress is already used! Try another", error.message);
-      navigate("/login");
+      //navigate("/login");
     }
   };
 
@@ -89,12 +110,14 @@ export const UsersContextProvider = ({ children }) => {
       });
       if (response.ok) {
         const userData = await response.json();
-        await setUser(userData);
+        setUser(userData);
         setLoggedIn(true);
         console.log(user);
         navigate("/");
       } else {
         alert("Invalid email or password");
+        setEmail("");
+        setPassword("");
       }
     } catch (error) {
       console.error("Error during login:", error);
@@ -102,12 +125,43 @@ export const UsersContextProvider = ({ children }) => {
     }
   };
 
+  /* 
+    APPOINTMENT FUNCTIONS ==========================================
+*/
+  const [appointments, setAppointments] = useState([]);
+  const [appoFormData, setAppoFormData] = useState({
+    id: null,
+    userId: `${user.id}`,
+    illness: "",
+    doctor: "",
+    description: "",
+    date: "",
+    time: "",
+  });
+
+  const fetchAppointments = async () => {
+    try {
+      const response = await fetch("http://localhost:3302/appointments");
+      if (response.ok) {
+        const data = await response.json();
+        setAppointments(data);
+      } else {
+        console.error("Failed to fetch appointments");
+      }
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
+  };
+
   return (
     <UsersContext.Provider
       value={{
+        getAllUsers,
+        allUsers,
+        setAllUsers,
         userData,
         setUserData,
-        handleChange,
+        handleSignupChange,
         handleSignupSubmit,
         email,
         setEmail,
@@ -118,6 +172,11 @@ export const UsersContextProvider = ({ children }) => {
         setLoggedIn,
         user,
         setUser,
+        fetchAppointments,
+        appointments,
+        setAppointments,
+        appoFormData,
+        setAppoFormData,
       }}
     >
       {children}
