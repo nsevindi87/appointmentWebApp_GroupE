@@ -131,9 +131,9 @@ export const UsersContextProvider = ({ children }) => {
   const [appointments, setAppointments] = useState([]);
   const [appoFormData, setAppoFormData] = useState({
     id: null,
-    userId: `${user.id}`,
+    userId: "",
     illness: "",
-    doctor: "",
+    doctorId: "",
     description: "",
     date: "",
     time: "",
@@ -150,6 +150,28 @@ export const UsersContextProvider = ({ children }) => {
       }
     } catch (error) {
       console.error("Error fetching appointments:", error);
+    }
+  };
+
+  // Formun gönderilmesi
+  const handleAppointmentSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:3302/appointments`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(appoFormData),
+      });
+      console.log("Gönderdim");
+      if (!response.ok) {
+        throw new Error("Failed to create post");
+      }
+    } catch (error) {
+      console.error("Kayit yapilamadi");
+      console.log(user.id);
+      console.log(appoFormData);
     }
   };
 
@@ -177,6 +199,7 @@ export const UsersContextProvider = ({ children }) => {
         setAppointments,
         appoFormData,
         setAppoFormData,
+        handleAppointmentSubmit,
       }}
     >
       {children}

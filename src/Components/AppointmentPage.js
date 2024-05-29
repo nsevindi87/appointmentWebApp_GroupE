@@ -1,111 +1,150 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { UsersContext } from "../Context/UsersContext";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import DateTimePicker from "react-datetime-picker";
 import "react-datepicker/dist/react-datepicker.css";
 
 const AppointmentForm = () => {
-  const { appoFormData, setAppoFormData, user } = useContext(UsersContext);
-
-  // Form verileri için state
-
-  // Form verilerini güncelleme fonksiyonu
-  const handleAppointmentChange = (e) => {
-    const { name, value } = e.target;
-    setAppoFormData({ ...appoFormData, [name]: value });
-  };
-
-  // Formun gönderilmesi
-  const handleAppointmentSubmit = (e) => {
-    e.preventDefault();
-    // TODO: Form verilerini backende gönderme
-    console.log(appoFormData);
-  };
+  const { appoFormData, setAppoFormData, user, handleAppointmentSubmit } =
+    useContext(UsersContext);
+  useEffect(() => {
+    setAppoFormData((prevFormData) => ({
+      ...prevFormData,
+      userId: user.id,
+    }));
+  }, [user, setAppoFormData]);
 
   return (
-    <Form onSubmit={handleAppointmentSubmit}>
-      <Form.Group controlId="illness">
-        <Form.Label>Hastalık</Form.Label>
-        <Form.Control
-          as="select"
-          name="illness"
-          value={appoFormData.illness}
-          onChange={handleAppointmentChange}
-          required
-        >
-          <option value="">Hastalık Seçin</option>
-          <option value="eye">Göz Hastalığı</option>
-          <option value="heart">Kalp Hastalığı</option>
-          <option value="bone">Kemik Hastalığı</option>
-          <option value="skin">Cilt Hastalığı</option>
-          <option value="lung">Akciğer Hastalığı</option>
-        </Form.Control>
-      </Form.Group>
+    <Container>
+      <Form onSubmit={handleAppointmentSubmit}>
+        <Form.Group controlId="illness">
+          <Form.Label>Illness</Form.Label>
+          <Form.Control
+            as="select"
+            name="illness"
+            value={appoFormData.illness}
+            onChange={(e) =>
+              setAppoFormData({
+                ...appoFormData,
+                [e.target.name]: e.target.value,
+              })
+            }
+            required
+          >
+            <option value="">Choose Illness</option>
+            <option value="Orthopedics">Orthopedics</option>
+            <option value="Cardiovascular">Cardiovascular</option>
+            <option value="Pediatrics">Pediatrics</option>
+            <option value="Oncology">Oncology</option>
+            <option value="Urology">Urology</option>
+          </Form.Control>
+        </Form.Group>
 
-      <Form.Group controlId="doctor">
-        <Form.Label>Doktor</Form.Label>
-        <Form.Control
-          as="select"
-          name="doctor"
-          value={appoFormData.doctor}
-          onChange={handleAppointmentChange}
-          required
-        >
-          <option value="">Doktor Seçin</option>
-          {appoFormData.illness === "eye" && (
-            <>
-              <option value="Dr. Ahmet">Dr. Ahmet</option>
-              <option value="Dr. Ayşe">Dr. Ayşe</option>
-              <option value="Dr. Mehmet">Dr. Mehmet</option>
-            </>
-          )}
-          {appoFormData.illness === "heart" && (
-            <>
-              <option value="Dr. Fatma">Dr. Fatma</option>
-              <option value="Dr. Gökhan">Dr. Gökhan</option>
-              <option value="Dr. Zeynep">Dr. Zeynep</option>
-            </>
-          )}
-          {/* Diğer hastalıklar için benzer şekilde */}
-        </Form.Control>
-      </Form.Group>
+        <Form.Group controlId="doctor">
+          <Form.Label>Doctor</Form.Label>
+          <Form.Control
+            as="select"
+            name="doctorId"
+            value={appoFormData.doctor}
+            onChange={(e) =>
+              setAppoFormData({
+                ...appoFormData,
+                [e.target.name]: e.target.value,
+              })
+            }
+            required
+          >
+            <option value="">Choose Doctor</option>
+            {appoFormData.illness === "eye" && (
+              <>
+                <option value="1">Dr. John Smith</option>
+                <option value="2">Dr. Emily Johnson</option>
+                <option value="3">Dr. Pierre Dupont</option>
+              </>
+            )}
+            {appoFormData.illness === "heart" && (
+              <>
+                <option value="4">Dr. Maria Rossi </option>
+                <option value="5">Dr. Hans Müller</option>
+                <option value="6">Dr. Yoko Tanaka</option>
+              </>
+            )}
+            {appoFormData.illness === "bone" && (
+              <>
+                <option value="7">Dr. Li Wei</option>
+                <option value="8">Dr. Vladimir Ivanov</option>
+                <option value="9">Dr. Ana García</option>
+              </>
+            )}
+            {appoFormData.illness === "skin" && (
+              <>
+                <option value="10">Dr. Ingrid Bergman</option>
+                <option value="11">Dr. Ahmed El-Sayed</option>
+                <option value="12">Dr. Olga Petrovna</option>
+              </>
+            )}
+            {appoFormData.illness === "lung" && (
+              <>
+                <option value="13">Dr. Fatima Al-Farsi</option>
+                <option value="14">Dr. Rahul Kapoor</option>
+                <option value="15">Dr. Carmen Hernandez</option>
+              </>
+            )}
+          </Form.Control>
+        </Form.Group>
 
-      <Form.Group controlId="date">
-        <Form.Label>Tarih</Form.Label>
-        <Form.Control
-          type="date"
-          name="date"
-          value={appoFormData.date}
-          onChange={handleAppointmentChange}
-          required
-        />
-      </Form.Group>
+        <Form.Group controlId="date">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            type="date"
+            name="date"
+            value={appoFormData.date}
+            onChange={(e) =>
+              setAppoFormData({
+                ...appoFormData,
+                [e.target.name]: e.target.value,
+              })
+            }
+            required
+          />
+        </Form.Group>
 
-      <Form.Group controlId="time">
-        <Form.Label>Saat</Form.Label>
-        <Form.Control
-          type="time"
-          name="time"
-          value={appoFormData.time}
-          onChange={handleAppointmentChange}
-          required
-        />
-      </Form.Group>
-      <Form.Group controlId="description">
-        <Form.Label>Açıklama</Form.Label>
-        <Form.Control
-          as="textarea" // Text alanı olarak belirtiliyor
-          rows={3} // Satır sayısı belirlenebilir
-          name="description"
-          value={appoFormData.description}
-          onChange={handleAppointmentChange}
-        />
-      </Form.Group>
+        <Form.Group controlId="time">
+          <Form.Label>Time</Form.Label>
+          <Form.Control
+            type="time"
+            name="time"
+            value={appoFormData.time}
+            onChange={(e) =>
+              setAppoFormData({
+                ...appoFormData,
+                [e.target.name]: e.target.value,
+              })
+            }
+            required
+          />
+        </Form.Group>
+        <Form.Group controlId="description">
+          <Form.Label>Açıklama</Form.Label>
+          <Form.Control
+            as="textarea"
+            rows={3}
+            name="description"
+            value={appoFormData.description}
+            onChange={(e) =>
+              setAppoFormData({
+                ...appoFormData,
+                [e.target.name]: e.target.value,
+              })
+            }
+          />
+        </Form.Group>
 
-      <Button variant="primary" type="submit">
-        Randevu Oluştur
-      </Button>
-    </Form>
+        <Button variant="primary" type="submit">
+          Randevu Oluştur
+        </Button>
+      </Form>
+    </Container>
   );
 };
 
