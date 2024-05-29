@@ -5,27 +5,14 @@ import { Container, Row, Col, Card, ListGroup } from "react-bootstrap";
 const Profile = () => {
   const {
     user,
-    fetchAppointments,
-    appointments,
-    allUsers,
-    getAllUsers,
-    setAppointments,
-    doctorList,
+    getFilteredAppointments,
+    userAppointments,
+    setUserAppointments,
   } = useContext(UsersContext);
 
-  const [userAppointments, setUserAppointments] = useState([]);
-
   useEffect(() => {
-    fetchAppointments();
-    getAllUsers();
-    if (user && appointments.length > 0) {
-      const filteredAppointments = appointments.filter(
-        (appointment) => appointment.userId === user.id
-      );
-      setUserAppointments(filteredAppointments);
-    }
-    console.log("all users profile" + allUsers);
-  }, [user]);
+    getFilteredAppointments();
+  }, []);
 
   return (
     <Container className="mt-4">

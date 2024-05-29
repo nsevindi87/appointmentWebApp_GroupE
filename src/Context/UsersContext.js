@@ -128,7 +128,8 @@ export const UsersContextProvider = ({ children }) => {
         const userData = await response.json();
         setUser(userData);
         setLoggedIn(true);
-        console.log(user);
+        setEmail("");
+        setPassword("");
         navigate("/");
       } else {
         alert("Invalid email or password");
@@ -145,6 +146,8 @@ export const UsersContextProvider = ({ children }) => {
     APPOINTMENT FUNCTIONS ==========================================
 */
   const [appointments, setAppointments] = useState([]);
+  const [userAppointments, setUserAppointments] = useState([]);
+
   const [appoFormData, setAppoFormData] = useState({
     id: null,
     userId: "",
@@ -161,6 +164,23 @@ export const UsersContextProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         setAppointments(data);
+      } else {
+        console.error("Failed to fetch appointments");
+      }
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
+  };
+
+  const getFilteredAppointments = async () => {
+    try {
+      const response = await fetch("http://localhost:3302/appointments");
+      if (response.ok) {
+        const data = await response.json();
+        const filteredAppointments = data.filter(
+          (appo) => appo.userId === user.id
+        );
+        setUserAppointments(filteredAppointments);
       } else {
         console.error("Failed to fetch appointments");
       }
@@ -220,6 +240,9 @@ export const UsersContextProvider = ({ children }) => {
         fetchAppointments,
         appointments,
         setAppointments,
+        getFilteredAppointments,
+        userAppointments,
+        setUserAppointments,
         appoFormData,
         setAppoFormData,
         handleAppointmentSubmit,
