@@ -181,13 +181,20 @@ export const UsersContextProvider = ({ children }) => {
         body: JSON.stringify(appoFormData),
       });
       console.log("Gönderdim");
+      setAppoFormData({
+        id: null,
+        userId: "",
+        illness: "",
+        doctorId: "",
+        description: "",
+        date: "",
+        time: "",
+      });
       if (!response.ok) {
         throw new Error("Failed to create post");
       }
     } catch (error) {
       console.error("Kayit yapilamadi");
-      console.log(user.id);
-      console.log(appoFormData);
     }
   };
 
