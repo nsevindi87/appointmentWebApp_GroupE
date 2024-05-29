@@ -7,16 +7,16 @@ const DoctorsList = () => {
 
   useEffect(() => {
     getDoctorList();
-    console.log("doktor listesi" + doctorList);
   }, []);
 
+  console.log("doktor listesi" + doctorList);
   return (
     <Container className="mt-4">
       <h1>Doctor Lists</h1>
       <hr></hr>
       <Row>
         {doctorList.map((doc, index) => (
-          <Col md={4} className="mb-4">
+          <Col key={index} md={4} className="mb-4">
             <Card style={{ width: "18rem" }}>
               <Card.Img
                 variant="top"

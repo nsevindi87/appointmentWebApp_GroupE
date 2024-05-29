@@ -147,12 +147,11 @@ export const UsersContextProvider = ({ children }) => {
 */
   const [appointments, setAppointments] = useState([]);
   const [userAppointments, setUserAppointments] = useState([]);
-
   const [appoFormData, setAppoFormData] = useState({
     id: null,
     userId: "",
     illness: "",
-    doctorId: "",
+    doctorName: "",
     description: "",
     date: "",
     time: "",
@@ -205,7 +204,7 @@ export const UsersContextProvider = ({ children }) => {
         id: null,
         userId: "",
         illness: "",
-        doctorId: "",
+        doctorName: "",
         description: "",
         date: "",
         time: "",
