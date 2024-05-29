@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 const AppointmentForm = () => {
   const { appoFormData, setAppoFormData, user, handleAppointmentSubmit } =
     useContext(UsersContext);
+
   useEffect(() => {
     setAppoFormData((prevFormData) => ({
       ...prevFormData,

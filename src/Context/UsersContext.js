@@ -43,7 +43,7 @@ export const UsersContextProvider = ({ children }) => {
       const response = await fetch("http://localhost:3302/users");
       if (response.ok) {
         const data = await response.json();
-        const doctorUsers = data.filter((user) => user.role === "doctor");
+        const doctorUsers = data.filter((user) => user.role === "Doctor");
         setDoctorList(doctorUsers);
       } else {
         console.error("Failed to fetch appointments");
@@ -191,6 +191,7 @@ export const UsersContextProvider = ({ children }) => {
   // Formun gönderilmesi
   const handleAppointmentSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const response = await fetch(`http://localhost:3302/appointments`, {
         method: "POST",
@@ -199,7 +200,11 @@ export const UsersContextProvider = ({ children }) => {
         },
         body: JSON.stringify(appoFormData),
       });
-      console.log("Gönderdim");
+
+      setTimeout(() => {
+        navigate("/profile");
+      }, 2000);
+
       setAppoFormData({
         id: null,
         userId: "",
@@ -215,6 +220,18 @@ export const UsersContextProvider = ({ children }) => {
     } catch (error) {
       console.error("Kayit yapilamadi");
     }
+  };
+
+  const deleteUserAppointment = async (pId) => {
+    try {
+      await fetch(`http://localhost:3302/appointments/${pId}`, {
+        method: "DELETE",
+      });
+      console.log("Silindi");
+    } catch (error) {
+      console.log(error);
+    }
+    getFilteredAppointments(user.id);
   };
 
   return (
@@ -247,6 +264,7 @@ export const UsersContextProvider = ({ children }) => {
         handleAppointmentSubmit,
         doctorList,
         getDoctorList,
+        deleteUserAppointment,
       }}
     >
       {children}
