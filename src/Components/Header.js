@@ -35,6 +35,9 @@ const Header = () => {
               </Nav.Link>
               {loggedIn && (
                 <>
+                  <Nav.Link as={NavLink} to="/doctors">
+                    Doctors
+                  </Nav.Link>
                   <Nav.Link as={NavLink} to="/profile">
                     Profile
                   </Nav.Link>

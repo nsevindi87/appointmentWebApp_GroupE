@@ -9,6 +9,7 @@ import AppointmentPage from "./Components/AppointmentPage";
 import Profile from "./Components/Profile";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
+import DoctorsList from './Components/DoctorsList';
 
 const router = createHashRouter([
   {
@@ -22,6 +23,10 @@ const router = createHashRouter([
       {
         path: "appointment",
         element: <AppointmentPage />,
+      },
+      {
+        path: "doctors",
+        element: <DoctorsList />,
       },
       {
         path: "profile",

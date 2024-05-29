@@ -10,6 +10,7 @@ const Profile = () => {
     allUsers,
     getAllUsers,
     setAppointments,
+    doctorList,
   } = useContext(UsersContext);
 
   const [userAppointments, setUserAppointments] = useState([]);
@@ -23,12 +24,8 @@ const Profile = () => {
       );
       setUserAppointments(filteredAppointments);
     }
+    console.log("all users profile" + allUsers);
   }, [user]);
-
-  console.log(user);
-  console.log(appointments);
-  console.log(userAppointments);
-  console.log(allUsers);
 
   return (
     <Container className="mt-4">

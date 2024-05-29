@@ -18,6 +18,7 @@ export const UsersContextProvider = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [allUsers, setAllUsers] = useState([]);
   const [user, setUser] = useState([]);
+  const [doctorList, setDoctorList] = useState([]);
 
   /* 
     USER FUNCTIONS ==========================================
@@ -29,6 +30,21 @@ export const UsersContextProvider = ({ children }) => {
       if (response.ok) {
         const data = await response.json();
         setAllUsers(data);
+      } else {
+        console.error("Failed to fetch appointments");
+      }
+    } catch (error) {
+      console.error("Error fetching appointments:", error);
+    }
+  };
+
+  const getDoctorList = async () => {
+    try {
+      const response = await fetch("http://localhost:3302/users");
+      if (response.ok) {
+        const data = await response.json();
+        const doctorUsers = data.filter((user) => user.role === "doctor");
+        setDoctorList(doctorUsers);
       } else {
         console.error("Failed to fetch appointments");
       }
@@ -200,6 +216,8 @@ export const UsersContextProvider = ({ children }) => {
         appoFormData,
         setAppoFormData,
         handleAppointmentSubmit,
+        doctorList,
+        getDoctorList,
       }}
     >
       {children}
