@@ -23,7 +23,7 @@ const AppointmentForm = () => {
         <Col md={5}>
           <Form onSubmit={handleAppointmentSubmit}>
             <Form.Group controlId="illness">
-              <Form.Label>Illness</Form.Label>
+              <Form.Label>Depertmant</Form.Label>
               <Form.Control
                 as="select"
                 name="illness"
@@ -36,7 +36,7 @@ const AppointmentForm = () => {
                 }
                 required
               >
-                <option value="">Choose Illness</option>
+                <option value="">Choose Dapertment</option>
                 <option value="Orthopedics">Orthopedics</option>
                 <option value="Cardiovascular">Cardiovascular</option>
                 <option value="Pediatrics">Pediatrics</option>
